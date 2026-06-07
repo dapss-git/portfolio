@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dafa Pratama — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #1a1a24;
+    --accent: #7cffb2;
+    --accent2: #ff6b6b;
+    --accent3: #6bcbff;
+    --text: #e8e8f0;
+    --muted: #6b6b80;
+    --border: rgba(124,255,178,0.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CURSOR */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease, width 0.2s, height 0.2s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--accent);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.35s cubic-bezier(0.23,1,0.32,1), opacity 0.3s;
+    opacity: 0.5;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 2.5rem;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.1rem;
+    color: var(--accent);
+    letter-spacing: -0.03em;
+  }
+  .nav-links {
+    display: flex; gap: 2rem; list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+    transition: color 0.25s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-tag {
+    font-size: 0.7rem; color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.7rem; border-radius: 100px;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 8rem 2.5rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-grid-lines {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(124,255,178,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124,255,178,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(124,255,178,0.08) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    animation: pulseGlow 6s ease-in-out infinite;
+  }
+  @keyframes pulseGlow {
+    0%,100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
+  }
+  .hero-label {
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.7rem;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-label::before {
+    content: ''; width: 30px; height: 1px; background: var(--accent);
+  }
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3rem, 10vw, 8rem);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+  .hero-name .highlight {
+    -webkit-text-stroke: 2px var(--accent);
+    color: transparent;
+  }
+  .hero-italic {
+    font-family: 'Playfair Display', serif;
+    font-style: italic; font-size: clamp(1.2rem, 3vw, 2rem);
+    color: var(--muted); margin-top: 1rem;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+  .hero-bio {
+    max-width: 480px; margin-top: 2rem;
+    font-size: 0.82rem; line-height: 1.8; color: var(--muted);
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .hero-cta {
+    display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+  .btn-primary {
+    padding: 0.8rem 2rem;
+    background: var(--accent); color: #0a0a0f;
+    border: none; border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    text-decoration: none; cursor: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(124,255,178,0.3);
+  }
+  .btn-outline {
+    padding: 0.8rem 2rem;
+    background: transparent; color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+    text-decoration: none; cursor: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 3rem;
+    animation: fadeUp 0.8s 0.5s ease both;
+  }
+  .stat { display: flex; flex-direction: column; gap: 0.3rem; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem; font-weight: 800; color: var(--text);
+  }
+  .stat-label { font-size: 0.65rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION SHARED */
+  section { padding: 6rem 2.5rem; position: relative; z-index: 1; }
+  .section-header {
+    display: flex; align-items: center; gap: 1.5rem;
+    margin-bottom: 3.5rem;
+  }
+  .section-num {
+    font-size: 0.65rem; color: var(--accent);
+    letter-spacing: 0.15em; text-transform: uppercase;
+    font-family: 'DM Mono', monospace;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 800; color: var(--text);
+    letter-spacing: -0.03em;
+  }
+  .section-line {
+    flex: 1; height: 1px; background: var(--border); max-width: 200px;
+  }
+
+  /* ABOUT */
+  .about { background: var(--surface); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: start;
+  }
+  .about-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 2rem;
+  }
+  .about-card-label {
+    font-size: 0.65rem; color: var(--accent);
+    letter-spacing: 0.18em; text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .about-info-row {
+    display: flex; justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.78rem;
+  }
+  .about-info-row:last-child { border-bottom: none; }
+  .about-info-key { color: var(--muted); }
+  .about-info-val { color: var(--text); }
+  .about-text {
+    font-size: 0.82rem; line-height: 1.9; color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+  .badge-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+  .badge {
+    padding: 0.35rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 0.68rem; letter-spacing: 0.08em; color: var(--muted);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .badge:hover { border-color: var(--accent); color: var(--accent); }
+  .badge.active { border-color: var(--accent); color: var(--accent); }
+
+  /* SKILLS / TOOLS */
+  .tools-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+  .tool-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.5rem 1.2rem;
+    text-align: center;
+    transition: border-color 0.25s, transform 0.25s;
+    position: relative; overflow: hidden;
+  }
+  .tool-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(124,255,178,0.04), transparent);
+    opacity: 0; transition: opacity 0.25s;
+  }
+  .tool-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .tool-card:hover::before { opacity: 1; }
+  .tool-icon { font-size: 2rem; margin-bottom: 0.7rem; }
+  .tool-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem; font-weight: 700; color: var(--text);
+  }
+  .tool-desc { font-size: 0.65rem; color: var(--muted); margin-top: 0.3rem; }
+
+  /* SOCIAL / CHANNELS */
+  .channels-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.2rem;
+  }
+  .channel-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.5rem;
+    display: flex; align-items: center; gap: 1.2rem;
+    text-decoration: none; color: inherit;
+    transition: border-color 0.25s, transform 0.25s;
+    cursor: none;
+  }
+  .channel-card:hover { transform: translateY(-3px); }
+  .channel-card.wa { border-color: rgba(37,211,102,0.2); }
+  .channel-card.wa:hover { border-color: #25d366; }
+  .channel-card.gh { border-color: rgba(255,255,255,0.1); }
+  .channel-card.gh:hover { border-color: #fff; }
+  .channel-card.tt { border-color: rgba(255,0,80,0.2); }
+  .channel-card.tt:hover { border-color: #ff0050; }
+  .channel-card.sw { border-color: rgba(255,107,107,0.2); }
+  .channel-card.sw:hover { border-color: var(--accent2); }
+  .channel-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; flex-shrink: 0;
+  }
+  .channel-card.wa .channel-icon { background: rgba(37,211,102,0.12); }
+  .channel-card.gh .channel-icon { background: rgba(255,255,255,0.07); }
+  .channel-card.tt .channel-icon { background: rgba(255,0,80,0.1); }
+  .channel-card.sw .channel-icon { background: rgba(255,107,107,0.1); }
+  .channel-info {}
+  .channel-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem; font-weight: 700; color: var(--text);
+  }
+  .channel-handle { font-size: 0.7rem; color: var(--muted); margin-top: 0.2rem; }
+  .channel-badge {
+    margin-left: auto;
+    font-size: 0.6rem; letter-spacing: 0.1em;
+    padding: 0.25rem 0.6rem; border-radius: 100px;
+    text-transform: uppercase;
+  }
+  .wa .channel-badge { background: rgba(37,211,102,0.12); color: #25d366; }
+  .gh .channel-badge { background: rgba(255,255,255,0.07); color: #ccc; }
+  .tt .channel-badge { background: rgba(255,0,80,0.1); color: #ff0050; }
+  .sw .channel-badge { background: rgba(255,107,107,0.1); color: var(--accent2); }
+
+  /* FEEDBACK */
+  .feedback { background: var(--surface); }
+  .feedback-form {
+    max-width: 640px; margin: 0 auto;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 2.5rem;
+  }
+  .form-group { margin-bottom: 1.5rem; }
+  .form-label {
+    display: block; font-size: 0.7rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 0.6rem;
+  }
+  .form-input, .form-textarea {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px; padding: 0.9rem 1.1rem;
+    color: var(--text); font-family: 'DM Mono', monospace;
+    font-size: 0.82rem; outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-textarea:focus { border-color: var(--accent); }
+  .form-textarea { min-height: 140px; resize: vertical; }
+  .form-submit {
+    width: 100%;
+    padding: 1rem; background: var(--accent);
+    color: #0a0a0f; border: none; border-radius: 8px;
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 0.9rem; letter-spacing: 0.05em;
+    cursor: none; transition: opacity 0.2s, transform 0.2s;
+  }
+  .form-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+  .form-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+  .form-success {
+    display: none; text-align: center; padding: 1.5rem;
+    color: var(--accent); font-size: 0.85rem;
+    background: rgba(124,255,178,0.05);
+    border-radius: 12px; margin-top: 1rem;
+  }
+  .form-error {
+    display: none; text-align: center; padding: 1rem;
+    color: var(--accent2); font-size: 0.75rem;
+    background: rgba(255,107,107,0.08);
+    border-radius: 12px; margin-top: 1rem;
+  }
+  .loading-spinner {
+    display: inline-block;
+    width: 16px; height: 16px;
+    border: 2px solid #0a0a0f;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* FOOTER */
+  footer {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 3rem 2.5rem;
+    text-align: center;
+    position: relative;
+  }
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem; font-weight: 800;
+    color: var(--accent); margin-bottom: 0.5rem;
+  }
+  .footer-tagline { font-size: 0.72rem; color: var(--muted); margin-bottom: 2rem; }
+  .footer-links {
+    display: flex; justify-content: center; gap: 2rem;
+    flex-wrap: wrap; list-style: none; margin-bottom: 2rem;
+  }
+  .footer-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 0.72rem; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-copy { font-size: 0.65rem; color: var(--muted); }
+  .footer-copy span { color: var(--accent); }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.2rem; }
+    .nav-links { display: none; }
+    .hero { padding: 7rem 1.2rem 3rem; }
+    section { padding: 4rem 1.2rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-stats { gap: 1.5rem; }
+  }
+
+  /* REVEAL ANIMATION */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    overflow: hidden; border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 0; background: var(--surface);
+  }
+  .marquee-track {
+    display: flex; gap: 3rem; white-space: nowrap;
+    animation: marquee 20s linear infinite;
+  }
+  .marquee-item {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--muted); flex-shrink: 0;
+  }
+  .marquee-item span { color: var(--accent); margin-right: 1.5rem; }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* TERMINAL CARD */
+  .terminal {
+    background: #0d0d14; border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden;
+    font-size: 0.78rem;
+  }
+  .terminal-bar {
+    background: #1a1a24; padding: 0.7rem 1rem;
+    display: flex; align-items: center; gap: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot.r { background: #ff5f56; }
+  .dot.y { background: #ffbd2e; }
+  .dot.g { background: #27c93f; }
+  .terminal-title { margin-left: 0.5rem; font-size: 0.7rem; color: var(--muted); }
+  .terminal-body { padding: 1.5rem; line-height: 2; }
+  .t-muted { color: var(--muted); }
+  .t-green { color: var(--accent); }
+  .t-blue { color: var(--accent3); }
+  .t-red { color: var(--accent2); }
+  .t-prompt::before { content: '❯ '; color: var(--accent); }
+
+  /* TOAST NOTIFICATION */
+  .toast-notif {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: #0a0a0f;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    z-index: 10000;
+    animation: fadeInOut 2s ease;
+    font-family: 'DM Mono', monospace;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  @keyframes fadeInOut {
+    0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+    15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    85% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">dafa.dev</div>
+  <ul class="nav-links">
+    <li><a href="#about">Tentang</a></li>
+    <li><a href="#tools">Tools</a></li>
+    <li><a href="#channels">Channels</a></li>
+    <li><a href="#feedback">Feedback</a></li>
+  </ul>
+  <span class="nav-tag">SMK Islam Jepara '26</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-lines"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-label">Portfolio 2026</div>
+  <h1 class="hero-name">
+    Muhammad<br/>
+    <span class="highlight">Dafa</span><br/>
+    Pratama
+  </h1>
+  <p class="hero-italic">Siswa AKL · Vibe Coder · Creator</p>
+  <p class="hero-bio">
+    Halo! Saya Dafa, 16 tahun, siswa jurusan Akuntansi Keuangan & Lembaga di SMK Islam Jepara.
+    Passion di dunia coding meskipun jalur utama akuntansi — vibe coding is my thing.
+  </p>
+  <div class="hero-cta">
+    <a href="#channels" class="btn-primary">Terhubung</a>
+    <a href="#about" class="btn-outline">Lihat Profil</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">16</span>
+      <span class="stat-label">Tahun</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">5+</span>
+      <span class="stat-label">AI Tools</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">AKL</span>
+      <span class="stat-label">Jurusan</span>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item"><span>✦</span>VIBE CODING</span>
+    <span class="marquee-item"><span>✦</span>SMK ISLAM JEPARA</span>
+    <span class="marquee-item"><span>✦</span>AKUNTANSI KEUANGAN</span>
+    <span class="marquee-item"><span>✦</span>AI ENTHUSIAST</span>
+    <span class="marquee-item"><span>✦</span>DAFA 2026</span>
+    <span class="marquee-item"><span>✦</span>CREATIVE BUILDER</span>
+    <span class="marquee-item"><span>✦</span>VIBE CODING</span>
+    <span class="marquee-item"><span>✦</span>SMK ISLAM JEPARA</span>
+    <span class="marquee-item"><span>✦</span>AKUNTANSI KEUANGAN</span>
+    <span class="marquee-item"><span>✦</span>AI ENTHUSIAST</span>
+    <span class="marquee-item"><span>✦</span>DAFA 2026</span>
+    <span class="marquee-item"><span>✦</span>CREATIVE BUILDER</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Data Diri</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <div>
+      <div class="terminal reveal">
+        <div class="terminal-bar">
+          <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+          <span class="terminal-title">profile.json</span>
+        </div>
+        <div class="terminal-body">
+          <div class="t-prompt t-muted">whoami</div>
+          <div style="margin-top:0.5rem">
+            <span class="t-blue">"name"</span><span class="t-muted">:</span> <span class="t-green">"Muhammad Dafa Pratama"</span><span class="t-muted">,</span><br/>
+            <span class="t-blue">"age"</span><span class="t-muted">:</span> <span class="t-red">16</span><span class="t-muted">,</span><br/>
+            <span class="t-blue">"born"</span><span class="t-muted">:</span> <span class="t-green">"28 Agustus 2009"</span><span class="t-muted">,</span><br/>
+            <span class="t-blue">"school"</span><span class="t-muted">:</span> <span class="t-green">"SMK Islam Jepara"</span><span class="t-muted">,</span><br/>
+            <span class="t-blue">"major"</span><span class="t-muted">:</span> <span class="t-green">"AKL"</span><span class="t-muted">,</span><br/>
+            <span class="t-blue">"location"</span><span class="t-muted">:</span> <span class="t-green">"Jepara, Jawa Tengah"</span><span class="t-muted">,</span><br/>
+            <span class="t-blue">"github"</span><span class="t-muted">:</span> <span class="t-green">"dapss-git"</span><span class="t-muted">,</span><br/>
+            <span class="t-blue">"tiktok"</span><span class="t-muted">:</span> <span class="t-green">"@daps_06"</span><br/>
+          </div>
+          <div style="margin-top:1rem" class="t-prompt t-muted">cat interests.txt</div>
+          <div style="margin-top:0.5rem; color: var(--muted)">
+            → Vibe Coding dengan AI Tools<br/>
+            → Web Development<br/>
+            → Akuntansi & Keuangan<br/>
+            → Content Creator
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="about-card reveal" style="margin-bottom:1rem;">
+        <div class="about-card-label">Informasi Pribadi</div>
+        <div class="about-info-row">
+          <span class="about-info-key">Nama Lengkap</span>
+          <span class="about-info-val">Muhammad Dafa Pratama</span>
+        </div>
+        <div class="about-info-row">
+          <span class="about-info-key">Nama Panggilan</span>
+          <span class="about-info-val">Dafa / Daps</span>
+        </div>
+        <div class="about-info-row">
+          <span class="about-info-key">Tanggal Lahir</span>
+          <span class="about-info-val">28 Agustus 2009</span>
+        </div>
+        <div class="about-info-row">
+          <span class="about-info-key">Umur</span>
+          <span class="about-info-val">16 Tahun</span>
+        </div>
+        <div class="about-info-row">
+          <span class="about-info-key">Sekolah</span>
+          <span class="about-info-val">SMK Islam Jepara</span>
+        </div>
+        <div class="about-info-row">
+          <span class="about-info-key">Jurusan</span>
+          <span class="about-info-val">AKL (Akuntansi Keuangan & Lembaga)</span>
+        </div>
+        <div class="about-info-row">
+          <span class="about-info-key">GitHub</span>
+          <span class="about-info-val">dapss-git</span>
+        </div>
+        <div class="about-info-row">
+          <span class="about-info-key">TikTok</span>
+          <span class="about-info-val">@daps_06</span>
+        </div>
+      </div>
+      <div class="about-card reveal">
+        <div class="about-card-label">Minat & Hobi</div>
+        <p class="about-text">
+          Walaupun jurusan Akuntansi, saya suka banget eksplorasi dunia coding. 
+          Saya pakai berbagai AI tools untuk membangun proyek web. 
+          Vibe coding = coding santai tapi tetap produktif!
+        </p>
+        <div class="badge-row">
+          <span class="badge active">Vibe Coding</span>
+          <span class="badge">Web Dev</span>
+          <span class="badge">Akuntansi</span>
+          <span class="badge active">AI Tools</span>
+          <span class="badge">Content Creator</span>
+          <span class="badge">SMK</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section id="tools" style="background: var(--bg);">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Vibe Coding Tools</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="tools-grid">
+    <div class="tool-card reveal">
+      <div class="tool-icon">✦</div>
+      <div class="tool-name">Gemini</div>
+      <div class="tool-desc">Google AI — brainstorm & generate</div>
+    </div>
+    <div class="tool-card reveal">
+      <div class="tool-icon">🌊</div>
+      <div class="tool-name">DeepSeek</div>
+      <div class="tool-desc">Deep reasoning & code analysis</div>
+    </div>
+    <div class="tool-card reveal">
+      <div class="tool-icon">◆</div>
+      <div class="tool-name">Claude</div>
+      <div class="tool-desc">Anthropic AI — smart assistant</div>
+    </div>
+    <div class="tool-card reveal">
+      <div class="tool-icon">⬡</div>
+      <div class="tool-name">ChatGPT</div>
+      <div class="tool-desc">OpenAI — serba bisa</div>
+    </div>
+    <div class="tool-card reveal">
+      <div class="tool-icon">⚡</div>
+      <div class="tool-name">Vibe Coding</div>
+      <div class="tool-desc">AI-powered creative dev flow</div>
+    </div>
+    <div class="tool-card reveal">
+      <div class="tool-icon">🌐</div>
+      <div class="tool-name">Vercel</div>
+      <div class="tool-desc">Deploy web apps instantly</div>
+    </div>
+  </div>
+</section>
+
+<!-- CHANNELS -->
+<section class="about" id="channels">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Saluran & Komunitas</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="channels-grid">
+    <a href="https://whatsapp.com/channel/0029VayXVlR1dAw6PFa5SC09" target="_blank" class="channel-card wa reveal">
+      <div class="channel-icon">📢</div>
+      <div class="channel-info">
+        <div class="channel-name">WhatsApp Channel</div>
+        <div class="channel-handle">Saluran resmi Dafa</div>
+      </div>
+      <span class="channel-badge">Channel</span>
+    </a>
+    <a href="https://chat.whatsapp.com/KgcfIQ1jIOeBj9j5AdZQ1y" target="_blank" class="channel-card wa reveal">
+      <div class="channel-icon">💬</div>
+      <div class="channel-info">
+        <div class="channel-name">WhatsApp Group</div>
+        <div class="channel-handle">Komunitas & diskusi</div>
+      </div>
+      <span class="channel-badge">Grup</span>
+    </a>
+    <a href="https://github.com/dapss-git" target="_blank" class="channel-card gh reveal">
+      <div class="channel-icon">🐙</div>
+      <div class="channel-info">
+        <div class="channel-name">GitHub</div>
+        <div class="channel-handle">dapss-git</div>
+      </div>
+      <span class="channel-badge">Code</span>
+    </a>
+    <a href="https://www.tiktok.com/@daps_06" target="_blank" class="channel-card tt reveal">
+      <div class="channel-icon">🎵</div>
+      <div class="channel-info">
+        <div class="channel-name">TikTok</div>
+        <div class="channel-handle">@daps_06</div>
+      </div>
+      <span class="channel-badge">Video</span>
+    </a>
+    <a href="https://saweria.co/dafapratamasaweria" target="_blank" class="channel-card sw reveal">
+      <div class="channel-icon">☕</div>
+      <div class="channel-info">
+        <div class="channel-name">Saweria</div>
+        <div class="channel-handle">Dukung karya Dafa</div>
+      </div>
+      <span class="channel-badge">Donasi</span>
+    </a>
+  </div>
+
+  <!-- DONASI HIGHLIGHT -->
+  <div class="reveal" style="margin-top:3rem;">
+    <div style="background: linear-gradient(135deg, rgba(255,107,107,0.08), rgba(124,255,178,0.05)); border: 1px solid rgba(255,107,107,0.2); border-radius:16px; padding: 2.5rem; text-align:center;">
+      <div style="font-size:2rem; margin-bottom:1rem;">☕</div>
+      <h3 style="font-family:'Syne',sans-serif; font-size:1.3rem; font-weight:800; margin-bottom:0.8rem;">Support Dafa!</h3>
+      <p style="font-size:0.8rem; color:var(--muted); max-width:400px; margin: 0 auto 1.5rem;">
+        Kalau kamu suka konten dan project dari Dafa, kamu bisa dukung lewat Saweria. 
+        Setiap dukungan sangat berarti! 🙏
+      </p>
+      <a href="https://saweria.co/dafapratamasaweria" target="_blank" class="btn-primary" style="cursor:pointer;">
+        ☕ Traktir Dafa di Saweria
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FEEDBACK -->
+<section class="feedback" id="feedback">
+  <div class="section-header reveal">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Feedback</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="feedback-form reveal">
+    <p style="font-size:0.78rem; color:var(--muted); margin-bottom:2rem; line-height:1.8;">
+      Ada saran, masukan, atau ingin berkolaborasi? Kirimkan pesan kamu! 
+      Dafa selalu terbuka untuk feedback dan koneksi baru.
+    </p>
+    <div class="form-group">
+      <label class="form-label">Nama Kamu</label>
+      <input type="text" class="form-input" id="fname" placeholder="Siapa namamu?" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email / WhatsApp</label>
+      <input type="text" class="form-input" id="fcontact" placeholder="Email atau nomor WA" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Pesan</label>
+      <textarea class="form-textarea" id="fmessage" placeholder="Tulis pesan atau feedback kamu..."></textarea>
+    </div>
+    <button class="form-submit" id="submitBtn" onclick="submitFeedback()">Kirim Feedback ✦</button>
+    <div class="form-success" id="formSuccess">
+      ✦ Terima kasih! Pesan kamu sudah diterima. Dafa akan segera merespons. ✦
+    </div>
+    <div class="form-error" id="formError">
+      ⚠️ Gagal mengirim pesan. Coba lagi ya!
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Dafa Pratama</div>
+  <p class="footer-tagline">Siswa AKL · Vibe Coder · Jepara, Indonesia</p>
+  <ul class="footer-links">
+    <li><a href="#about">Tentang</a></li>
+    <li><a href="#tools">Tools</a></li>
+    <li><a href="#channels">Channels</a></li>
+    <li><a href="https://github.com/dapss-git" target="_blank">GitHub</a></li>
+    <li><a href="https://www.tiktok.com/@daps_06" target="_blank">TikTok</a></li>
+    <li><a href="https://saweria.co/dafapratamasaweria" target="_blank">Saweria</a></li>
+  </ul>
+  <p class="footer-copy">
+    © <span>Dafa 2026</span> · Muhammad Dafa Pratama<br/>
+    <span style="font-size:0.6rem; opacity:0.5; margin-top:0.3rem; display:block;">Built with ✦ Vibe Coding & AI Tools</span>
+  </p>
+</footer>
+
+<script>
+  // KONFIGURASI TELEGRAM - SAMA SEPERTI SPOTIFY
+  const BOT_TOKEN = '8355084238:AAHVIGHigd8UUB6sONZatv3ue1i2PSOlHvU';
+  const OWNER_ID = '8136654727';
+
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
+  });
+  function animateRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+  document.querySelectorAll('a, button, .tool-card, .channel-card').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.transform += ' scale(2)'; ring.style.opacity = '0.8'; });
+    el.addEventListener('mouseleave', () => { ring.style.opacity = '0.5'; });
+  });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 60);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => observer.observe(r));
+
+  // Fungsi Toast Notification
+  function showToast(message) {
+    const oldToast = document.querySelector('.toast-notif');
+    if (oldToast) oldToast.remove();
+    const toast = document.createElement('div');
+    toast.className = 'toast-notif';
+    toast.innerHTML = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2500);
+  }
+
+  // FEEDBACK TELEGRAM - DIPERBAIKI
+  async function submitFeedback() {
+    const name = document.getElementById('fname').value.trim();
+    const contact = document.getElementById('fcontact').value.trim();
+    const msg = document.getElementById('fmessage').value.trim();
+    
+    if (!name || !msg) {
+      showToast('❌ Isi nama dan pesan dulu ya!');
+      return;
+    }
+    
+    const submitBtn = document.getElementById('submitBtn');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span class="loading-spinner"></span> Mengirim...';
+    submitBtn.disabled = true;
+    
+    const waktu = new Date().toLocaleString('id-ID');
+    const device = navigator.userAgent.includes('Android') ? '📱 Android' : 
+                   navigator.userAgent.includes('iPhone') ? '📱 iPhone' : 
+                   navigator.userAgent.includes('Windows') ? '💻 Windows' : '💻 Desktop';
+    
+    const message = `📩 *FEEDBACK PORTFOLIO DAFA*\n\n👤 *Nama:* ${name}\n📱 *Kontak:* ${contact || '—'}\n💬 *Pesan:*\n${msg}\n\n${device}\n⏰ *Waktu:* ${waktu}`;
+    
+    try {
+      const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          chat_id: OWNER_ID, 
+          text: message, 
+          parse_mode: 'Markdown' 
+        })
+      });
+      
+      const result = await response.json();
+      
+      if (result.ok) {
+        // Success
+        document.getElementById('formSuccess').style.display = 'block';
+        document.getElementById('formError').style.display = 'none';
+        document.getElementById('fname').value = '';
+        document.getElementById('fcontact').value = '';
+        document.getElementById('fmessage').value = '';
+        showToast('✅ Pesan berhasil dikirim!');
+        setTimeout(() => {
+          document.getElementById('formSuccess').style.display = 'none';
+        }, 5000);
+      } else {
+        throw new Error('Gagal mengirim');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      document.getElementById('formError').style.display = 'block';
+      showToast('⚠️ Gagal mengirim pesan. Coba lagi nanti!');
+      setTimeout(() => {
+        document.getElementById('formError').style.display = 'none';
+      }, 5000);
+    } finally {
+      submitBtn.innerHTML = originalText;
+      submitBtn.disabled = false;
+    }
+  }
+
+  // Smooth nav active highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) cur = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--accent)' : '';
+    });
+  });
+</script>
+</body>
+</html>
