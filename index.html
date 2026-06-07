@@ -602,7 +602,7 @@
             <span class="t-blue">"born"</span><span class="t-muted">:</span> <span class="t-green">"28 Agustus 2009"</span><span class="t-muted">,</span><br/>
             <span class="t-blue">"school"</span><span class="t-muted">:</span> <span class="t-green">"SMK Islam Jepara"</span><span class="t-muted">,</span><br/>
             <span class="t-blue">"major"</span><span class="t-muted">:</span> <span class="t-green">"AKL"</span><span class="t-muted">,</span><br/>
-            <span class="t-blue">"location"</span><span class="t-muted">:</span> <span class="t-green">"Jepara, Jawa Tengah"</span><span class="t-muted">,</span><br/>
+            <span class="t-blue">"location"</span><span class="t-muted">:</span> <span class="t-green">"Jawa Tengah"</span><span class="t-muted">,</span><br/>
             <span class="t-blue">"github"</span><span class="t-muted">:</span> <span class="t-green">"dapss-git"</span><span class="t-muted">,</span><br/>
             <span class="t-blue">"tiktok"</span><span class="t-muted">:</span> <span class="t-green">"@daps_06"</span><br/>
           </div>
@@ -816,7 +816,7 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">Dafa Pratama</div>
-  <p class="footer-tagline">Siswa AKL · Vibe Coder · Jepara, Indonesia</p>
+  <p class="footer-tagline">Vibe Coder</p>
   <ul class="footer-links">
     <li><a href="#about">Tentang</a></li>
     <li><a href="#tools">Tools</a></li>
@@ -899,7 +899,7 @@
                    navigator.userAgent.includes('iPhone') ? '📱 iPhone' : 
                    navigator.userAgent.includes('Windows') ? '💻 Windows' : '💻 Desktop';
     
-    const message = `📩 *FEEDBACK PORTFOLIO DAFA*\n\n👤 *Nama:* ${name}\n📱 *Kontak:* ${contact || '—'}\n💬 *Pesan:*\n${msg}\n\n${device}\n⏰ *Waktu:* ${waktu}`;
+    const message = `📩 *FEEDBACK PORTFOLIO*\n\n👤 *Nama:* ${name}\n📱 *Kontak:* ${contact || '—'}\n💬 *Pesan:*\n${msg}\n\n${device}\n⏰ *Waktu:* ${waktu}`;
     
     try {
       const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
