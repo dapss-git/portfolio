@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Dafa Pratama — Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@1,400;1,700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <style>
   :root {
     --bg: #0a0a0f;
@@ -277,7 +278,7 @@
   }
   .tool-card:hover { border-color: var(--accent); transform: translateY(-4px); }
   .tool-card:hover::before { opacity: 1; }
-  .tool-icon { font-size: 2rem; margin-bottom: 0.7rem; }
+  .tool-icon { font-size: 2rem; margin-bottom: 0.7rem; color: var(--accent); }
   .tool-name {
     font-family: 'Syne', sans-serif;
     font-size: 0.85rem; font-weight: 700; color: var(--text);
@@ -310,7 +311,7 @@
   .channel-icon {
     width: 48px; height: 48px; border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.4rem; flex-shrink: 0;
+    font-size: 1.6rem; flex-shrink: 0;
   }
   .channel-card.wa .channel-icon { background: rgba(37,211,102,0.12); }
   .channel-card.gh .channel-icon { background: rgba(255,255,255,0.07); }
@@ -524,7 +525,7 @@
     <li><a href="#channels">Channels</a></li>
     <li><a href="#feedback">Feedback</a></li>
   </ul>
-  <span class="nav-tag"DAFA '26</span>
+  <span class="nav-tag">DAFA '26</span>
 </nav>
 
 <!-- HERO -->
@@ -552,7 +553,7 @@
       <span class="stat-label">Tahun</span>
     </div>
     <div class="stat">
-      <span class="stat-num">5+</span>
+      <span class="stat-num">8+</span>
       <span class="stat-label">AI Tools</span>
     </div>
     <div class="stat">
@@ -670,7 +671,7 @@
   </div>
 </section>
 
-<!-- TOOLS -->
+<!-- TOOLS - UPDATED -->
 <section id="tools" style="background: var(--bg);">
   <div class="section-header reveal">
     <span class="section-num">02</span>
@@ -679,39 +680,49 @@
   </div>
   <div class="tools-grid">
     <div class="tool-card reveal">
-      <div class="tool-icon">✦</div>
+      <div class="tool-icon"><i class="fa-solid fa-gem"></i></div>
       <div class="tool-name">Gemini</div>
-      <div class="tool-desc">Google AI — brainstorm & generate</div>
+      <div class="tool-desc">Google AI — Brainstorm</div>
     </div>
     <div class="tool-card reveal">
-      <div class="tool-icon">🌊</div>
-      <div class="tool-name">DeepSeek</div>
-      <div class="tool-desc">Deep reasoning & code analysis</div>
-    </div>
-    <div class="tool-card reveal">
-      <div class="tool-icon">◆</div>
+      <div class="tool-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
       <div class="tool-name">Claude</div>
-      <div class="tool-desc">Anthropic AI — smart assistant</div>
+      <div class="tool-desc">Anthropic — Smart Assist</div>
     </div>
     <div class="tool-card reveal">
-      <div class="tool-icon">⬡</div>
+      <div class="tool-icon"><i class="fa-solid fa-robot"></i></div>
+      <div class="tool-name">QwenAI</div>
+      <div class="tool-desc">Alibaba — Coding Model</div>
+    </div>
+    <div class="tool-card reveal">
+      <div class="tool-icon"><i class="fa-brands fa-openai"></i></div>
       <div class="tool-name">ChatGPT</div>
-      <div class="tool-desc">OpenAI — serba bisa</div>
+      <div class="tool-desc">OpenAI — Serba bisa</div>
     </div>
     <div class="tool-card reveal">
-      <div class="tool-icon">⚡</div>
-      <div class="tool-name">Vibe Coding</div>
-      <div class="tool-desc">AI-powered creative dev flow</div>
+      <div class="tool-icon"><i class="fa-brands fa-github"></i></div>
+      <div class="tool-name">GitHub</div>
+      <div class="tool-desc">Repo & Version Control</div>
     </div>
     <div class="tool-card reveal">
-      <div class="tool-icon">🌐</div>
+      <div class="tool-icon"><i class="fa-solid fa-triangle-circle-square"></i></div>
       <div class="tool-name">Vercel</div>
-      <div class="tool-desc">Deploy web apps instantly</div>
+      <div class="tool-desc">Deployment & Hosting</div>
+    </div>
+    <div class="tool-card reveal">
+      <div class="tool-icon"><i class="fa-solid fa-server"></i></div>
+      <div class="tool-name">Pterodactyl</div>
+      <div class="tool-desc">Game Server Panel</div>
+    </div>
+    <div class="tool-card reveal">
+      <div class="tool-icon"><i class="fa-solid fa-microchip"></i></div>
+      <div class="tool-name">DeepSeek</div>
+      <div class="tool-desc">Advanced Reasoning</div>
     </div>
   </div>
 </section>
 
-<!-- CHANNELS -->
+<!-- CHANNELS - UPDATED -->
 <section class="about" id="channels">
   <div class="section-header reveal">
     <span class="section-num">03</span>
@@ -720,7 +731,7 @@
   </div>
   <div class="channels-grid">
     <a href="https://whatsapp.com/channel/0029VayXVlR1dAw6PFa5SC09" target="_blank" class="channel-card wa reveal">
-      <div class="channel-icon">📢</div>
+      <div class="channel-icon"><i class="fa-brands fa-whatsapp"></i></div>
       <div class="channel-info">
         <div class="channel-name">WhatsApp Channel</div>
         <div class="channel-handle">Saluran resmi Dafa</div>
@@ -728,7 +739,7 @@
       <span class="channel-badge">Channel</span>
     </a>
     <a href="https://chat.whatsapp.com/KgcfIQ1jIOeBj9j5AdZQ1y" target="_blank" class="channel-card wa reveal">
-      <div class="channel-icon">💬</div>
+      <div class="channel-icon"><i class="fa-solid fa-comments"></i></div>
       <div class="channel-info">
         <div class="channel-name">WhatsApp Group</div>
         <div class="channel-handle">Komunitas & diskusi</div>
@@ -736,7 +747,7 @@
       <span class="channel-badge">Grup</span>
     </a>
     <a href="https://github.com/dapss-git" target="_blank" class="channel-card gh reveal">
-      <div class="channel-icon">🐙</div>
+      <div class="channel-icon"><i class="fa-brands fa-github"></i></div>
       <div class="channel-info">
         <div class="channel-name">GitHub</div>
         <div class="channel-handle">dapss-git</div>
@@ -744,7 +755,7 @@
       <span class="channel-badge">Code</span>
     </a>
     <a href="https://www.tiktok.com/@daps_06" target="_blank" class="channel-card tt reveal">
-      <div class="channel-icon">🎵</div>
+      <div class="channel-icon"><i class="fa-brands fa-tiktok"></i></div>
       <div class="channel-info">
         <div class="channel-name">TikTok</div>
         <div class="channel-handle">@daps_06</div>
@@ -752,7 +763,7 @@
       <span class="channel-badge">Video</span>
     </a>
     <a href="https://saweria.co/dafapratamasaweria" target="_blank" class="channel-card sw reveal">
-      <div class="channel-icon">☕</div>
+      <div class="channel-icon"><i class="fa-solid fa-mug-hot"></i></div>
       <div class="channel-info">
         <div class="channel-name">Saweria</div>
         <div class="channel-handle">Dukung karya Dafa</div>
@@ -761,17 +772,16 @@
     </a>
   </div>
 
-  <!-- DONASI HIGHLIGHT -->
   <div class="reveal" style="margin-top:3rem;">
     <div style="background: linear-gradient(135deg, rgba(255,107,107,0.08), rgba(124,255,178,0.05)); border: 1px solid rgba(255,107,107,0.2); border-radius:16px; padding: 2.5rem; text-align:center;">
-      <div style="font-size:2rem; margin-bottom:1rem;">☕</div>
+      <div style="font-size:2rem; margin-bottom:1rem; color: var(--accent2);"><i class="fa-solid fa-coffee"></i></div>
       <h3 style="font-family:'Syne',sans-serif; font-size:1.3rem; font-weight:800; margin-bottom:0.8rem;">Support Dafa!</h3>
       <p style="font-size:0.8rem; color:var(--muted); max-width:400px; margin: 0 auto 1.5rem;">
         Kalau kamu suka konten dan project dari Dafa, kamu bisa dukung lewat Saweria. 
         Setiap dukungan sangat berarti! 🙏
       </p>
       <a href="https://saweria.co/dafapratamasaweria" target="_blank" class="btn-primary" style="cursor:pointer;">
-        ☕ Traktir Dafa di Saweria
+        <i class="fa-solid fa-mug-hot"></i> Traktir Dafa di Saweria
       </a>
     </div>
   </div>
@@ -913,7 +923,6 @@
       const result = await response.json();
       
       if (result.ok) {
-        // Success
         document.getElementById('formSuccess').style.display = 'block';
         document.getElementById('formError').style.display = 'none';
         document.getElementById('fname').value = '';
